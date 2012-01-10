@@ -2,6 +2,14 @@
 ---- It should be defined properly. 
 ....
 
+==== UI_key_mappings_with_selection_exclusive 
+---- It should move the cursor properly in Normal mode. 
+........
+---- It should move the cursor properly in Visual mode. 
+........
+---- It should move the cursor properly in Operator-pending mode. 
+........
+
 ==== UI_key_mappings_with_selection_inclusive 
 ---- It should move the cursor properly in Normal mode. 
 ........
@@ -15,4 +23,4 @@
 **** Result ****
 
 
-28 examples, 0 failures
+52 examples, 0 failures

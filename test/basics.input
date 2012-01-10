@@ -38,7 +38,7 @@ function! CheckOperations(direction, operation_command)
     else
       normal! 2gg$
     endif
-    let last_col = 0
+    let last_col = -1
     while line('.') == 2 && col('.') != last_col
       let last_col = col('.')
       call add(cols, last_col)
@@ -147,6 +147,165 @@ function s:describe__UI_key_mappings_with_selection_inclusive()  "{{{1
   \   38, 41, 43, 44, 45
   \ ]
   Should CheckMovements('forward', "normal v\<Plug>(smartword-e)v") == [
+  \   1, 2, 7, 13, 19,
+  \   23, 27, 33, 37, 41,
+  \   44
+  \ ]
+
+  Should CheckMovements('backward', 'normal! vgev') == [
+  \   45, 44, 43, 41, 38,
+  \   37, 34, 33, 30, 27,
+  \   24, 23, 20, 19, 16,
+  \   13, 9, 7, 2, 1
+  \ ]
+  Should CheckMovements('backward', "normal v\<Plug>(smartword-ge)v") == [
+  \   45, 44, 41, 37, 33,
+  \   27, 23, 19, 13, 7,
+  \   2
+  \ ]
+
+  It should move the cursor properly in Operator-pending mode.
+
+  Should CheckOperations('forward', 'normal! yw`]') == [
+  \   1, 2, 4, 8, 10,
+  \   14, 17, 20, 21, 24,
+  \   25, 28, 31, 34, 35,
+  \   38, 39, 42, 44, 45
+  \ ]
+  Should CheckOperations('forward', "normal y\<Plug>(smartword-w)`]") == [
+  \   1, 2, 4, 10, 17,
+  \   21, 25, 31, 35, 39,
+  \   44, 45
+  \ ]
+
+  Should CheckOperations('backward', 'normal! yb') == [
+  \   45, 44, 42, 39, 38,
+  \   35, 34, 31, 28, 25,
+  \   24, 21, 20, 17, 14,
+  \   10, 8, 4, 2, 1
+  \ ]
+  Should CheckOperations('backward', "normal y\<Plug>(smartword-b)") == [
+  \   45, 44, 39, 35, 31,
+  \   25, 21, 17, 10, 4,
+  \   2
+  \ ]
+
+  Should CheckOperations('forward', 'normal! ye`]') == [
+  \   1, 2, 7, 9, 13,
+  \   16, 19, 20, 23, 24,
+  \   27, 30, 33, 34, 37,
+  \   38, 41, 43, 44, 45
+  \ ]
+  Should CheckOperations('forward', "normal y\<Plug>(smartword-e)`]") == [
+  \   1, 2, 7, 13, 19,
+  \   23, 27, 33, 37, 41,
+  \   44
+  \ ]
+
+  Should CheckOperations('backward', 'normal! yge') == [
+  \   45, 44, 43, 41, 38,
+  \   37, 34, 33, 30, 27,
+  \   24, 23, 20, 19, 16,
+  \   13, 9, 7, 2, 1
+  \ ]
+  Should CheckOperations('backward', "normal y\<Plug>(smartword-ge)") == [
+  \   45, 44, 41, 37, 33,
+  \   27, 23, 19, 13, 7,
+  \   2
+  \ ]
+
+  set selection&
+endfunction
+
+
+
+
+function s:describe__UI_key_mappings_with_selection_exclusive()  "{{{1
+  set selection=exclusive
+
+  It should move the cursor properly in Normal mode.
+
+  Should CheckMovements('forward', 'normal! w') == [
+  \   1, 2, 4, 8, 10,
+  \   14, 17, 20, 21, 24,
+  \   25, 28, 31, 34, 35,
+  \   38, 39, 42, 44, 45
+  \ ]
+  Should CheckMovements('forward', "normal \<Plug>(smartword-w)") == [
+  \   1, 2, 4, 10, 17,
+  \   21, 25, 31, 35, 39,
+  \   44
+  \ ]
+
+  Should CheckMovements('backward', 'normal! b') == [
+  \   45, 44, 42, 39, 38,
+  \   35, 34, 31, 28, 25,
+  \   24, 21, 20, 17, 14,
+  \   10, 8, 4, 2, 1
+  \ ]
+  Should CheckMovements('backward', "normal \<Plug>(smartword-b)") == [
+  \   45, 44, 39, 35, 31,
+  \   25, 21, 17, 10, 4,
+  \   2
+  \ ]
+
+  Should CheckMovements('forward', 'normal! e') == [
+  \   1, 2, 7, 9, 13,
+  \   16, 19, 20, 23, 24,
+  \   27, 30, 33, 34, 37,
+  \   38, 41, 43, 44, 45
+  \ ]
+  Should CheckMovements('forward', "normal \<Plug>(smartword-e)") == [
+  \   1, 2, 7, 13, 19,
+  \   23, 27, 33, 37, 41,
+  \   44
+  \ ]
+
+  Should CheckMovements('backward', 'normal! ge') == [
+  \   45, 44, 43, 41, 38,
+  \   37, 34, 33, 30, 27,
+  \   24, 23, 20, 19, 16,
+  \   13, 9, 7, 2, 1
+  \ ]
+  Should CheckMovements('backward', "normal \<Plug>(smartword-ge)") == [
+  \   45, 44, 41, 37, 33,
+  \   27, 23, 19, 13, 7,
+  \   2
+  \ ]
+
+  It should move the cursor properly in Visual mode.
+
+  Should CheckMovements('forward', 'normal! vwv') == [
+  \   1, 2, 4, 8, 10,
+  \   14, 17, 20, 21, 24,
+  \   25, 28, 31, 34, 35,
+  \   38, 39, 42, 44, 45
+  \ ]
+  Should CheckMovements('forward', "normal v\<Plug>(smartword-w)v") == [
+  \   1, 2, 4, 10, 17,
+  \   21, 25, 31, 35, 39,
+  \   44
+  \ ]
+
+  Should CheckMovements('backward', 'normal! vbv') == [
+  \   45, 44, 42, 39, 38,
+  \   35, 34, 31, 28, 25,
+  \   24, 21, 20, 17, 14,
+  \   10, 8, 4, 2, 1
+  \ ]
+  Should CheckMovements('backward', "normal v\<Plug>(smartword-b)v") == [
+  \   45, 44, 39, 35, 31,
+  \   25, 21, 17, 10, 4,
+  \   2
+  \ ]
+
+  Should CheckMovements('forward', 'normal! vehv') == [
+  \   1, 2, 7, 9, 13,
+  \   16, 19, 20, 23, 24,
+  \   27, 30, 33, 34, 37,
+  \   38, 41, 43, 44, 45
+  \ ]
+  Should CheckMovements('forward', "normal v\<Plug>(smartword-e)hv") == [
   \   1, 2, 7, 13, 19,
   \   23, 27, 33, 37, 41,
   \   44

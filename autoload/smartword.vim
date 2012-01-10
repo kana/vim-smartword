@@ -48,7 +48,7 @@ function! smartword#move(motion_command, mode)  "{{{2
     normal! gv
   endif
 
-  call s:move(a:motion_command, v:count1)
+  call s:move(a:motion_command, a:mode, v:count1)
 
   if exclusive_adjustment_p
     execute "normal! \<Esc>"
@@ -88,13 +88,27 @@ endfunction
 
 
 
-function! s:move(motion_command, times)  "{{{2
+function! s:move(motion_command, mode, times)  "{{{2
+  call s:_move(a:motion_command, a:mode, a:times)
+  if &selection ==# 'exclusive'
+  \  && a:motion_command ==# 'e'
+  \  && (a:mode ==# 'v' || a:mode ==# 'o')
+    normal! l
+  endif
+endfunction
+
+function! s:_move(motion_command, mode, times)
   for i in range(a:times)
     let curpos = []  " dummy
     let newpos = []  " dummy
     while !0
       let curpos = newpos
       execute 'normal!' a:motion_command
+      if &selection ==# 'exclusive'
+      \  && a:motion_command ==# 'e'
+      \  && (a:mode ==# 'v' || a:mode ==# 'o')
+        normal! h
+      endif
       let newpos = getpos('.')
 
       if s:current_char(newpos) =~# '\k'
