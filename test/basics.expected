@@ -1,0 +1,18 @@
+==== UI_key_mapping_definitions 
+---- It should be defined properly. 
+....
+
+==== UI_key_mappings_with_selection_inclusive 
+---- It should move the cursor properly in Normal mode. 
+........
+---- It should move the cursor properly in Visual mode. 
+........
+---- It should move the cursor properly in Operator-pending mode. 
+........
+
+
+
+**** Result ****
+
+
+28 examples, 0 failures
