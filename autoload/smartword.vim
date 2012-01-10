@@ -89,7 +89,7 @@ endfunction
 
 
 function! s:move(motion_command, times)  "{{{2
-  for i in range(v:count1)
+  for i in range(a:times)
     let curpos = []  " dummy
     let newpos = []  " dummy
     while !0
