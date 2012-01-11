@@ -95,6 +95,11 @@ function! s:move(motion_command, mode, times)  "{{{2
   \  && (a:mode ==# 'v' || a:mode ==# 'o')
     normal! l
   endif
+  if &selection ==# 'exclusive'
+  \  && a:motion_command ==# 'ge'
+  \  && a:mode ==# 'o'
+    normal! ol
+  endif
 endfunction
 
 function! s:_move(motion_command, mode, times)
