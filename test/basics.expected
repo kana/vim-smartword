@@ -2,12 +2,22 @@
 ---- It should be defined properly. 
 ....
 
-==== UI_key_mappings_with_selection_inclusive 
----- It should move the cursor properly in Normal mode. 
+==== UI_key_mappings_in_Normal_mode 
+---- It should move the cursor properly if &selection ==# 'inclusive'. 
 ........
----- It should move the cursor properly in Visual mode. 
+---- It should move the cursor properly if &selection ==# 'exclusive'. 
 ........
----- It should move the cursor properly in Operator-pending mode. 
+
+==== UI_key_mappings_in_Operator_pending_mode 
+---- It should move the cursor properly if &selection ==# 'inclusive'. 
+........
+---- It should move the cursor properly if &selection ==# 'exclusive'. 
+........
+
+==== UI_key_mappings_in_Visual_mode 
+---- It should move the cursor properly if &selection ==# 'inclusive'. 
+........
+---- It should move the cursor properly if &selection ==# 'exclusive'. 
 ........
 
 
@@ -15,4 +25,4 @@
 **** Result ****
 
 
-28 examples, 0 failures
+52 examples, 0 failures
