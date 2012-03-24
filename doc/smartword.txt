@@ -1,6 +1,6 @@
 *smartword.txt*	Smart motions on words
 
-Version 0.0.2
+Version 0.0.3
 Script ID: 2470
 Copyright (C) 2008 kana <http://whileimautomaton.net/>
 License: MIT license  {{{
@@ -142,6 +142,11 @@ BUGS						*smartword-bugs*
 
 ==============================================================================
 CHANGELOG					*smartword-changelog*
+
+0.0.3	2012-03-24T14:26:01+09:00		*smartword-changelog-0.0.3*
+	- Add missing tests.
+	- Fix a bug on smartword movement with a count.
+	- Fix wrong movement if 'selection' == "exclusive".
 
 0.0.2	2009-01-23T19:13:29+09:00		*smartword-changelog-0.0.2*
 	- Fix the document a bit.
