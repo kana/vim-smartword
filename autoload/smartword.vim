@@ -23,6 +23,8 @@
 " }}}
 " Interface  "{{{1
 function! smartword#move(motion_command, mode)  "{{{2
+  let save_count = v:count1
+
   let exclusive_adjustment_p = 0
   if a:mode ==# 'o' && (a:motion_command ==# 'e' || a:motion_command ==# 'ge')
     if exists('v:motion_force')  " if it's possible to check o_v and others:
@@ -48,7 +50,7 @@ function! smartword#move(motion_command, mode)  "{{{2
     normal! gv
   endif
 
-  call s:move(a:motion_command, a:mode, v:count1)
+  call s:move(a:motion_command, a:mode, save_count)
 
   if exclusive_adjustment_p
     execute "normal! \<Esc>"
