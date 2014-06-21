@@ -106,6 +106,7 @@ function! s:_move(motion_command, mode, times)
   let newpos = getpos('.')
 
   for i in range(a:times)
+    let lastiterpos = newpos
     while !0
       let lastpos = newpos
 
@@ -125,6 +126,27 @@ function! s:_move(motion_command, mode, times)
       endif
     endwhile
   endfor
+
+  " `dw` is equivalent to `vwhd` in most of situations.  But there is an
+  " exception.  If `w` moves the cursor to another line, it acts as `$`.
+  " Suppose that the current buffer contains the following text:
+  "
+  "     1|foo bar
+  "     2|  baz
+  "     3|qux
+  "
+  " Typing `w` on "bar" moves the cursor to "baz".
+  " But `dw` on "bar" delets only "bar" instead of "bar\n  ".
+  " The same can be said for other operators.
+  "
+  " vim-smartword tries emulating this exception if necessary.
+  if a:motion_command ==# 'w' && a:mode == 'o' && lastiterpos[1] != newpos[1]
+    call setpos('.', lastiterpos)
+    " FIXME: This $ should be inclusive, but this function is executed in
+    " a context of : in Operator-pending mode.  So that this $ becomes
+    " exclusive.
+    normal! $
+  endif
 
   return
 endfunction
