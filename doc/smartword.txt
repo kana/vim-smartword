@@ -1,8 +1,8 @@
 *smartword.txt*	Smart motions on words
 
-Version 0.0.3
+Version 0.0.4
 Script ID: 2470
-Copyright (C) 2008 kana <http://whileimautomaton.net/>
+Copyright (C) 2008-2014 Kana Natsuno <http://whileimautomaton.net/>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the
@@ -70,10 +70,7 @@ Requirements:
 - Vim 7.2 or later
 
 Latest version:
-http://github.com/kana/config/commits/vim-smartword
-
-Document in HTML format:
-http://kana.github.com/config/vim/smartword.html
+https://github.com/kana/vim-smartword
 
 
 
@@ -128,20 +125,40 @@ EXAMPLES					*smartword-examples*
 ==============================================================================
 BUGS						*smartword-bugs*
 
+						*smartword-w-over-lines*
+- `dw` is equivalent to `vwhd` in most of situations.  But there is an
+  exception.  If `w` moves the cursor to another line, it acts as `$`.
+  Suppose that the current buffer contains the following text:
+>
+      1|foo bar
+      2|  baz
+      3|qux
+<
+  Typing `w` on "bar" moves the cursor to "baz".  But `dw` on "bar" deletes
+  only "bar" instead of "bar\n  ".  The same can be said for other operators.
+
+  |<Plug>(smartword-w)| tries emulating this exceptional behavior of |w|.  But
+  this emulation is a bit tricky.  If you notice that something goes wrong,
+  please report it via: https://github.com/kana/vim-smartword/issues
+
 - Don't consider about special cases such as |cw|.
 
 - |o_v| and others don't work for |<Plug>(smartword-e)| and
   |<Plug>(smartword-ge)| because of the limitation of Vim script.
 
-  Note that if the following patch (*) is applied to Vim, |o_v| and others
-  work for both motions.  But |o_v| with empty selection still doesn't work.
-  (*) http://github.com/kana/vim/commits/hack/vimvar-motion_force
+  Note that if the following patch is applied to Vim, |o_v| and others work
+  for both motions.  But |o_v| with empty selection still doesn't work.
+  https://github.com/kana/vim/commit/06472e0ebb7c9919d90157f4a6edd17a1376b81c
 
 
 
 
 ==============================================================================
 CHANGELOG					*smartword-changelog*
+
+0.0.4	2014-06-21T11:54:02+09:00		*smartword-changelog-0.0.4*
+	- Fix |<Plug>(smartword-w)| to emulate an exceptional behavior of |w|.
+	  See also |smartword-w-over-lines|.
 
 0.0.3	2012-03-24T14:26:01+09:00		*smartword-changelog-0.0.3*
 	- Add missing tests.

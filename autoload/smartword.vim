@@ -1,6 +1,6 @@
 " smartword - Smart motions on words
-" Version: 0.0.3
-" Copyright (C) 2008 kana <http://whileimautomaton.net/>
+" Version: 0.0.4
+" Copyright (C) 2008-2014 Kana Natsuno <http://whileimautomaton.net/>
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -137,7 +137,7 @@ function! s:_move(motion_command, mode, times)
   "     3|qux
   "
   " Typing `w` on "bar" moves the cursor to "baz".
-  " But `dw` on "bar" delets only "bar" instead of "bar\n  ".
+  " But `dw` on "bar" deletes only "bar" instead of "bar\n  ".
   " The same can be said for other operators.
   "
   " vim-smartword tries emulating this exception if necessary.
