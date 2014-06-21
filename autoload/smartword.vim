@@ -103,11 +103,14 @@ function! s:move(motion_command, mode, times)  "{{{2
 endfunction
 
 function! s:_move(motion_command, mode, times)
+  let firstpos = getpos('.')
+  let newpos = firstpos
+
   for i in range(a:times)
-    let curpos = []  " dummy
-    let newpos = []  " dummy
+    let lastiterpos = newpos
     while !0
-      let curpos = newpos
+      let lastpos = newpos
+
       execute 'normal!' a:motion_command
       if &selection ==# 'exclusive'
       \  && a:motion_command ==# 'e'
@@ -119,11 +122,37 @@ function! s:_move(motion_command, mode, times)
       if s:current_char(newpos) =~# '\k'
         break
       endif
-      if curpos == newpos  " No more word - stop.
+      if lastpos == newpos  " No more word - stop.
         return
       endif
     endwhile
   endfor
+
+  " `dw` is equivalent to `vwhd` in most of situations.  But there is an
+  " exception.  If `w` moves the cursor to another line, it acts as `$`.
+  " Suppose that the current buffer contains the following text:
+  "
+  "     1|foo bar
+  "     2|  baz
+  "     3|qux
+  "
+  " Typing `w` on "bar" moves the cursor to "baz".
+  " But `dw` on "bar" delets only "bar" instead of "bar\n  ".
+  " The same can be said for other operators.
+  "
+  " vim-smartword tries emulating this exception if necessary.
+  if a:motion_command ==# 'w' && a:mode == 'o' && lastiterpos[1] != newpos[1]
+    " Here we have to use `$` to emulate the exceptional behavior of `dw`.
+    " Though `$` is an inclusive motion, this function is executed in
+    " a context of `:` in Operator-pending mode, and a resulting motion by
+    " this function is treated as exclusive.  So that we have to use also `v`
+    " to target a proper region.
+    call setpos('.', firstpos)
+    normal! v
+    call setpos('.', lastiterpos)
+    normal! $h
+  endif
+
   return
 endfunction
 
