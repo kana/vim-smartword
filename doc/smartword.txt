@@ -70,7 +70,7 @@ Requirements:
 - Vim 7.2 or later
 
 Latest version:
-http://github.com/kana/config/commits/vim-smartword
+https://github.com/kana/vim-smartword
 
 Document in HTML format:
 http://kana.github.com/config/vim/smartword.html
