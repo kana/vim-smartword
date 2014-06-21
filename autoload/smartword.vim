@@ -105,7 +105,7 @@ endfunction
 function! s:_move(motion_command, mode, times)
   for i in range(a:times)
     let curpos = []  " dummy
-    let newpos = []  " dummy
+    let newpos = getpos('.')
     while !0
       let curpos = newpos
       execute 'normal!' a:motion_command
