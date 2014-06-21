@@ -107,7 +107,7 @@ function! s:_move(motion_command, mode, times)
 
   for i in range(a:times)
     while !0
-      let curpos = newpos
+      let lastpos = newpos
 
       execute 'normal!' a:motion_command
       if &selection ==# 'exclusive'
@@ -120,7 +120,7 @@ function! s:_move(motion_command, mode, times)
       if s:current_char(newpos) =~# '\k'
         break
       endif
-      if curpos == newpos  " No more word - stop.
+      if lastpos == newpos  " No more word - stop.
         return
       endif
     endwhile
