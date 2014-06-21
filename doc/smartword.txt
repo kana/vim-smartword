@@ -128,6 +128,22 @@ EXAMPLES					*smartword-examples*
 ==============================================================================
 BUGS						*smartword-bugs*
 
+						*smartword-w-over-lines*
+- `dw` is equivalent to `vwhd` in most of situations.  But there is an
+  exception.  If `w` moves the cursor to another line, it acts as `$`.
+  Suppose that the current buffer contains the following text:
+>
+      1|foo bar
+      2|  baz
+      3|qux
+<
+  Typing `w` on "bar" moves the cursor to "baz".  But `dw` on "bar" deletes
+  only "bar" instead of "bar\n  ".  The same can be said for other operators.
+
+  |<Plug>(smartword-w)| tries emulating this exceptional behavior of |w|.  But
+  this emulation is a bit tricky.  If you notice that something goes wrong,
+  please report it via: https://github.com/kana/vim-smartword/issues
+
 - Don't consider about special cases such as |cw|.
 
 - |o_v| and others don't work for |<Plug>(smartword-e)| and
@@ -142,6 +158,10 @@ BUGS						*smartword-bugs*
 
 ==============================================================================
 CHANGELOG					*smartword-changelog*
+
+0.0.4	2014-06-21T11:54:02+09:00		*smartword-changelog-0.0.4*
+	- Fix |<Plug>(smartword-w)| to emulate an exceptional behavior of |w|.
+	  See also |smartword-w-over-lines|.
 
 0.0.3	2012-03-24T14:26:01+09:00		*smartword-changelog-0.0.3*
 	- Add missing tests.
