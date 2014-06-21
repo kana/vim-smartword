@@ -103,7 +103,8 @@ function! s:move(motion_command, mode, times)  "{{{2
 endfunction
 
 function! s:_move(motion_command, mode, times)
-  let newpos = getpos('.')
+  let firstpos = getpos('.')
+  let newpos = firstpos
 
   for i in range(a:times)
     let lastiterpos = newpos
@@ -141,11 +142,15 @@ function! s:_move(motion_command, mode, times)
   "
   " vim-smartword tries emulating this exception if necessary.
   if a:motion_command ==# 'w' && a:mode == 'o' && lastiterpos[1] != newpos[1]
+    " Here we have to use `$` to emulate the exceptional behavior of `dw`.
+    " Though `$` is an inclusive motion, this function is executed in
+    " a context of `:` in Operator-pending mode, and a resulting motion by
+    " this function is treated as exclusive.  So that we have to use also `v`
+    " to target a proper region.
+    call setpos('.', firstpos)
+    normal! v
     call setpos('.', lastiterpos)
-    " FIXME: This $ should be inclusive, but this function is executed in
-    " a context of : in Operator-pending mode.  So that this $ becomes
-    " exclusive.
-    normal! $
+    normal! $h
   endif
 
   return
