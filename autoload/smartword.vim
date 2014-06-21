@@ -103,7 +103,6 @@ function! s:move(motion_command, mode, times)  "{{{2
 endfunction
 
 function! s:_move(motion_command, mode, times)
-  let curpos = []  " dummy
   let newpos = getpos('.')
 
   for i in range(a:times)
