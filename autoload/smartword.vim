@@ -79,14 +79,11 @@ endfunction
 
 
 
-
 " Misc.  "{{{1
+
 function! s:current_char(pos)  "{{{2
   return getline(a:pos[1])[a:pos[2] - 1]
 endfunction
-
-
-
 
 function! s:move(motion_command, mode, times)  "{{{2
   call s:_move(a:motion_command, a:mode, a:times)
@@ -111,7 +108,7 @@ function! s:_move(motion_command, mode, times)
     while !0
       let lastpos = newpos
 
-      execute 'normal!' a:motion_command
+      execute "normal \<Plug>(smartword-basic-" . a:motion_command . ')'
       if &selection ==# 'exclusive'
       \  && a:motion_command ==# 'e'
       \  && (a:mode ==# 'v' || a:mode ==# 'o')
