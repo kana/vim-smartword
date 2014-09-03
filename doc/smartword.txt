@@ -90,6 +90,16 @@ MAPPINGS					*smartword-mappings*
 			and Operator-pending mode.
 
 
+<Plug>(smartword-basic-w)			 *<Plug>(smartword-basic-w)*
+<Plug>(smartword-basic-b)			 *<Plug>(smartword-basic-b)*
+<Plug>(smartword-basic-e)		         *<Plug>(smartword-basic-e)*
+<Plug>(smartword-basic-ge)		         *<Plug>(smartword-basic-ge)*
+                        Effective mappings for the motions, defaulting to the
+                        built-in |w|, |b|, |e| and |ge|.
+                        Can be used to make smartword work with other motion
+                        plugins.
+			These mappings are defined in Normal mode.
+
 
 
 ==============================================================================
@@ -117,6 +127,20 @@ EXAMPLES					*smartword-examples*
 	noremap ,b  b
 	noremap ,e  e
 	noremap ,ge  ge
+
+(D) Use CamelCaseMotion as effective motion:
+>
+	nmap <Plug>(smartword-basic-w) <Plug>CamelCaseMotion_w
+
+    Now the cursor will jump to N and x on
+
+        someName_xyz
+
+
+
+
+==============================================================================
+BUGS						*smartword-bugs*
 <
 
 
