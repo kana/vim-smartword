@@ -111,7 +111,7 @@ function! s:_move(motion_command, mode, times)
     while !0
       let lastpos = newpos
 
-      execute 'normal!' a:motion_command
+      execute 'normal' "\<Plug>(smartword-basic-" . a:motion_command . ')'
       if &selection ==# 'exclusive'
       \  && a:motion_command ==# 'e'
       \  && (a:mode ==# 'v' || a:mode ==# 'o')
