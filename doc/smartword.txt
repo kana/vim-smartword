@@ -89,6 +89,20 @@ MAPPINGS					*smartword-mappings*
 			These mappings are defined in Normal mode, Visual mode
 			and Operator-pending mode.
 
+<Plug>(smartword-basic-w)			 *<Plug>(smartword-basic-w)*
+<Plug>(smartword-basic-b)			 *<Plug>(smartword-basic-b)*
+<Plug>(smartword-basic-e)		         *<Plug>(smartword-basic-e)*
+<Plug>(smartword-basic-ge)		         *<Plug>(smartword-basic-ge)*
+			Basic motions on words.  These are equivalent to |w|,
+			|b|, |e| and |ge| by default.  These are used to
+			implement smart motions such as |<Plug>(smartword-w)|.
+			These mappings are defined in Normal mode, Visual mode
+			and Operator-pending mode.
+
+			You can customize these mappings to tweak smartword to
+			behave based on custom motions.  See also
+			|smartword-examples|.
+
 
 
 
@@ -118,6 +132,16 @@ EXAMPLES					*smartword-examples*
 	noremap ,e  e
 	noremap ,ge  ge
 <
+
+(D) Use CamelCaseMotion https://github.com/bkad/CamelCaseMotion as basic
+wordwise motions, but skip uninteresting punctuations as smartword does:
+>
+	map <Plug>(smartword-basic-w)  <Plug>CamelCaseMotion_w
+	map <Plug>(smartword-basic-b)  <Plug>CamelCaseMotion_b
+	map <Plug>(smartword-basic-e)  <Plug>CamelCaseMotion_e
+<
+You also have to define key mappings to use smartword like example (A) or (B).
+Note that CamelCaseMotion does not provide a custom motion behaves like |ge|.
 
 
 
