@@ -180,6 +180,10 @@ BUGS						*smartword-bugs*
 ==============================================================================
 CHANGELOG					*smartword-changelog*
 
+0.1.1	2015-04-25T00:19:40+09:00		*smartword-changelog-0.1.1*
+	- Fix to recognize count given to |smartword-mappings| in Visual mode
+	  and Operator-pending mode.
+
 0.1.0	2014-09-06T13:35:58+09:00		*smartword-changelog-0.1.0*
 	- Add |<Plug>(smartword-basic-w)| and others to customize basic
 	  wordwise motions used by smaratword.  See also |smartword-examples|
