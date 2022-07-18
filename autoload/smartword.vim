@@ -27,23 +27,17 @@ function! smartword#move(motion_command, mode)  "{{{2
 
   let exclusive_adjustment_p = 0
   if a:mode ==# 'o' && (a:motion_command ==# 'e' || a:motion_command ==# 'ge')
-    if exists('v:motion_force')  " if it's possible to check o_v and others:
-      if v:motion_force == ''
-        " inclusive
-        normal! v
-      elseif v:motion_force ==# 'v'
-        " User-defined motion is always exclusive and o_v forces it inclusve.
-        " So here use Visual mode to behave this motion as an exclusive one.
-        normal! v
-        let exclusive_adjustment_p = !0
-      else  " v:motion_force ==# 'V' || v:motion_force ==# "\<C-v>"
-        " linewise or blockwise
-        " -- do nothing because o_V or o_CTRL-V will override the motion type.
-      endif
-    else  " if it's not possible:
-      " inclusive -- the same as the default style of "e" and "ge".
-      " BUGS: o_v and others are ignored.
+    if mode(1) ==# 'no'
+      " inclusive
       normal! v
+    elseif mode(1) ==# 'nov'
+      " User-defined motion is always exclusive and o_v forces it inclusve.
+      " So here use Visual mode to behave this motion as an exclusive one.
+      normal! v
+      let exclusive_adjustment_p = !0
+    else  " mode ==# 'noV' || mode ==# "no\<C-v>"
+      " linewise or blockwise
+      " -- do nothing because o_V or o_CTRL-V will override the motion type.
     endif
   endif
   if a:mode == 'v'
